@@ -1,0 +1,17 @@
+{
+  "name": "devops-portfolio",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^13.1.3",
+    "astro": "^4.16.0",
+    "gsap": "^3.14.2",
+    "three": "^0.183.2"
+  }
+}

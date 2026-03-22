@@ -1,0 +1,31 @@
+---
+// Snackbar.astro - Toast notification system 
+---
+
+<div class="snackbar-container" id="snackbar-container"></div>
+
+<script>
+  function showToast(message: string, type: string = 'info') {
+    const container = document.getElementById('snackbar-container');
+    if (!container) return;
+
+    const toast = document.createElement('div');
+    toast.className = 'snackbar';
+    toast.textContent = message;
+
+    container.appendChild(toast);
+
+    requestAnimationFrame(() => {
+      toast.classList.add('show');
+    });
+
+    setTimeout(() => {
+      toast.classList.remove('show');
+      toast.classList.add('hide');
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
+
+  // Expose globally
+  (window as any).showToast = showToast;
+</script>

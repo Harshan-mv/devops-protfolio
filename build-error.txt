@@ -1,0 +1,32 @@
+
+> devops-portfolio@1.0.0 build
+> astro build
+
+14:47:06 [types] Generated 414ms
+14:47:06 [build] output: "static"
+14:47:06 [build] directory: D:\Desktop\portfolio\dist\
+14:47:06 [build] Collecting build info...
+14:47:06 [build] ✓ Completed in 427ms.
+14:47:06 [build] Building static entrypoints...
+14:47:07 [vite] [32m✓ built in 1.47s[39m
+14:47:07 [build] ✓ Completed in 1.51s.
+
+ building client (vite) 
+14:47:07 [vite] transforming...
+14:47:07 [vite] [32m✓[39m 14 modules transformed.
+14:47:07 [vite] rendering chunks...
+14:47:07 [vite] computing gzip size...
+14:47:07 [vite] [2mdist/[22m[36m_assets/hoisted.DOV_DEkH.js  [39m[1m[2m2.02 kB[22m[1m[22m[2m │ gzip: 0.84 kB[22m
+14:47:07 [vite] [2mdist/[22m[36m_assets/hoisted.Dx01CSjg.js  [39m[1m[2m5.24 kB[22m[1m[22m[2m │ gzip: 2.01 kB[22m
+14:47:07 [vite] [32m✓ built in 77ms[39m
+
+ generating static routes 
+14:47:07 ▶ src/pages/blog/[slug].astro
+14:47:07   ├─ /blog/k8s-ingress-guide/index.html (+12ms)
+14:47:07   └─ /blog/terraform-basics/index.html (+3ms)
+14:47:07 ▶ src/pages/index.astro
+14:47:07   └─ /index.html (+5ms)
+14:47:07 ✓ Completed in 38ms.
+
+14:47:07 [build] 3 page(s) built in 2.07s
+14:47:07 [build] Complete!

@@ -1,0 +1,33 @@
+---
+// Loader.astro - Full screen terminal boot sequence 
+---
+
+<div class="loader-overlay" id="loader">
+  <div class="loader-terminal">
+    <div class="line">> initializing portfolio...</div>
+    <div class="line">> loading modules...</div>
+    <div class="line">> establishing connection...</div>
+    <div class="line">> welcome, folks.</div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const loader = document.getElementById('loader');
+    const lines = loader?.querySelectorAll('.line');
+    if (!lines) return;
+
+    lines.forEach((line, i) => {
+      setTimeout(() => {
+        line.classList.add('visible');
+      }, 300 * (i + 1));
+    });
+
+    setTimeout(() => {
+      loader?.classList.add('fade-out');
+      setTimeout(() => {
+        loader?.remove();
+      }, 600);
+    }, 300 * lines.length + 800);
+  });
+</script>

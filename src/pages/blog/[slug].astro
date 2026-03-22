@@ -1,0 +1,175 @@
+---
+import '../../styles/global.css';
+import '../../styles/blog.css';
+import Navbar from '../../components/Navbar.astro';
+import Cursor from '../../components/Cursor.astro';
+import ScrollBar from '../../components/ScrollBar.astro';
+import Snackbar from '../../components/Snackbar.astro';
+import Footer from '../../components/Footer.astro';
+
+interface BlogPost {
+  title: string;
+  date: string;
+  tags: string[];
+  content: string;
+}
+
+const posts: Record<string, BlogPost> = {
+  'k8s-ingress-guide': {
+    title: 'Understanding Kubernetes Ingress Controllers',
+    date: '2024-12-15',
+    tags: ['Kubernetes', 'Networking', 'DevOps'],
+    content: `<h2>What is an Ingress Controller?</h2>
+<p>An Ingress Controller is a specialized load balancer for Kubernetes environments. It abstracts the complexity of routing external traffic to internal services, providing features like SSL termination, path-based routing, and virtual hosting.</p>
+
+<h2>Why Do You Need One?</h2>
+<p>Without an Ingress Controller, you'd need to expose each service individually using <code>NodePort</code> or <code>LoadBalancer</code> type services. This quickly becomes unmanageable as your application grows.</p>
+
+<pre><code>apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-app-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: myapp.example.com
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: api-service
+                port:
+                  number: 80</code></pre>
+
+<h2>Popular Ingress Controllers</h2>
+
+<h3>1. Nginx Ingress Controller</h3>
+<p>The most widely adopted choice. It's battle-tested, well-documented, and supports a rich set of annotations for fine-grained control.</p>
+
+<h3>2. Traefik</h3>
+<p>A modern, cloud-native reverse proxy that integrates beautifully with Kubernetes. It auto-discovers services and supports middleware chains.</p>
+
+<h3>3. HAProxy</h3>
+<p>A high-performance option for latency-sensitive workloads. HAProxy has been a reliable load balancer long before Kubernetes existed.</p>
+
+<h2>Best Practices</h2>
+<ul>
+<li><strong>Always use TLS</strong> — configure cert-manager for automated certificate management</li>
+<li><strong>Rate limiting</strong> — protect your services from abuse</li>
+<li><strong>Health checks</strong> — configure proper readiness and liveness probes</li>
+<li><strong>Monitoring</strong> — export metrics to Prometheus for observability</li>
+</ul>
+
+<h2>Conclusion</h2>
+<p>Choosing the right Ingress Controller depends on your specific requirements — traffic volume, feature needs, and team expertise. Start with Nginx if you're unsure, then evaluate alternatives as your needs evolve.</p>`,
+  },
+  'terraform-basics': {
+    title: 'Terraform Fundamentals: Infrastructure as Code',
+    date: '2024-11-28',
+    tags: ['Terraform', 'IaC', 'AWS'],
+    content: `<h2>What is Terraform?</h2>
+<p>Terraform is an open-source Infrastructure as Code (IaC) tool by HashiCorp. It lets you define cloud and on-prem resources in human-readable configuration files that you can version, reuse, and share.</p>
+
+<h2>Core Concepts</h2>
+
+<h3>Providers</h3>
+<p>Providers are plugins that let Terraform interact with cloud platforms and services. AWS, Azure, GCP, and hundreds of others are supported.</p>
+
+<pre><code>provider "aws" {
+  region = "ap-south-1"
+}</code></pre>
+
+<h3>Resources</h3>
+<p>Resources are the most important element in Terraform. Each resource block describes one or more infrastructure objects.</p>
+
+<pre><code>resource "aws_instance" "web" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t3.micro"
+
+  tags = {
+    Name        = "web-server"
+    Environment = "production"
+  }
+}</code></pre>
+
+<h3>Variables</h3>
+<p>Variables make your configurations flexible and reusable.</p>
+
+<pre><code>variable "instance_type" {
+  description = "EC2 instance type"
+  type        = string
+  default     = "t3.micro"
+}</code></pre>
+
+<h2>The Terraform Workflow</h2>
+<ol>
+<li><strong><code>terraform init</code></strong> — Initialize the working directory</li>
+<li><strong><code>terraform plan</code></strong> — Preview changes before applying</li>
+<li><strong><code>terraform apply</code></strong> — Apply the planned changes</li>
+<li><strong><code>terraform destroy</code></strong> — Tear down all managed resources</li>
+</ol>
+
+<h2>State Management</h2>
+<p>Terraform maintains a state file that maps real-world resources to your configuration. For team collaboration, store state remotely:</p>
+
+<pre><code>terraform {
+  backend "s3" {
+    bucket = "my-terraform-state"
+    key    = "prod/terraform.tfstate"
+    region = "ap-south-1"
+  }
+}</code></pre>
+
+<h2>Conclusion</h2>
+<p>Terraform transforms infrastructure management from manual, error-prone processes into reproducible, version-controlled code. Start small, build modules, and gradually adopt it across your entire infrastructure.</p>`,
+  },
+};
+
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'k8s-ingress-guide' } },
+    { params: { slug: 'terraform-basics' } },
+  ];
+}
+
+const { slug } = Astro.params;
+const post = posts[slug as string];
+
+if (!post) {
+  return Astro.redirect('/');
+}
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={post.title + ' — Harshan\'s DevOps Blog'} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>{post.title} — Harshan</title>
+</head>
+<body>
+  <ScrollBar />
+  <Snackbar />
+  <Navbar />
+
+  <article class="blog-post">
+    <div class="blog-post-header">
+      <a href="/#blog" class="blog-post-back">← Back to posts</a>
+      <div class="blog-post-date">{post.date}</div>
+      <h1 class="blog-post-title">{post.title}</h1>
+      <div class="blog-post-tags">
+        {post.tags.map((tag: string) => <span>{tag}</span>)}
+      </div>
+    </div>
+    <div class="blog-content" set:html={post.content} />
+  </article>
+
+  <Footer />
+  <Cursor />
+</body>
+</html>

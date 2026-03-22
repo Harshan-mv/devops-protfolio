@@ -1,0 +1,48 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Understanding Kubernetes Ingress Controllers — Harshan's DevOps Blog"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Understanding Kubernetes Ingress Controllers — Harshan</title><link rel="stylesheet" href="/_assets/_slug_.DMTUTkCa.css">
+<style>.blog-post{max-width:720px;margin:0 auto;padding:calc(var(--navbar-height) + 60px) 40px 80px}.blog-post-header{margin-bottom:40px}.blog-post-back{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-body);font-size:13px;color:var(--text-muted);margin-bottom:24px;transition:color .2s ease}.blog-post-back:hover{color:var(--primary)}.blog-post-date{font-family:var(--font-heading);font-size:12px;color:var(--primary);margin-bottom:12px}.blog-post-title{font-family:var(--font-heading);font-size:32px;color:var(--text);font-weight:700;line-height:1.3;margin-bottom:16px}.blog-post-tags{display:flex;flex-wrap:wrap;gap:8px}.blog-post-tags span{background:#1a1a1a;color:var(--text-muted);font-family:var(--font-heading);font-size:11px;padding:4px 10px;border-radius:var(--radius-pill)}.blog-content{font-family:var(--font-body);font-size:16px;color:var(--text-muted);line-height:1.9}.blog-content h1,.blog-content h2,.blog-content h3,.blog-content h4{font-family:var(--font-heading);color:var(--primary);margin-top:36px;margin-bottom:16px;line-height:1.3}.blog-content h1{font-size:28px}.blog-content h2{font-size:22px}.blog-content h3{font-size:18px}.blog-content h4{font-size:16px}.blog-content p{margin-bottom:18px}.blog-content a{color:var(--primary);text-decoration:underline;text-underline-offset:3px}.blog-content a:hover{color:var(--secondary)}.blog-content strong{color:var(--text)}.blog-content ul,.blog-content ol{padding-left:24px;margin-bottom:18px}.blog-content ul{list-style:disc}.blog-content ol{list-style:decimal}.blog-content li{margin-bottom:8px}.blog-content code{font-family:var(--font-heading);font-size:14px;color:var(--primary);background:var(--card-bg);padding:2px 6px;border-radius:3px}.blog-content pre{background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius-card);padding:20px;margin-bottom:18px;overflow-x:auto}.blog-content pre code{background:none;padding:0;color:var(--text-muted);font-size:13px;line-height:1.7}.blog-content blockquote{border-left:3px solid var(--primary);padding-left:16px;margin:18px 0;color:var(--text-muted);font-style:italic}.blog-content hr{border:none;border-top:1px solid var(--card-border);margin:32px 0}.blog-content img{border-radius:var(--radius-card);margin:18px 0}@media (max-width: 768px){.blog-post{padding:calc(var(--navbar-height) + 30px) 20px 60px}.blog-post-title{font-size:24px}.blog-content{font-size:15px}}
+</style><script type="module" src="/_assets/hoisted.DOV_DEkH.js"></script></head> <body> <div class="scroll-progress" id="scroll-progress"></div>  <div class="snackbar-container" id="snackbar-container"></div>  <nav class="navbar" id="navbar"> <a href="#hero" class="nav-logo">> harshan.sh<span class="blink">_</span></a> <div class="nav-links"> <a href="#hero" class="active">Home</a> <a href="#about">About</a> <a href="#skills">Skills</a> <a href="#projects">Projects</a> <a href="#blog">Blog</a> <a href="#contact">Contact</a> </div> <button class="hamburger" id="hamburger" aria-label="Toggle menu"> <span></span> <span></span> <span></span> </button> </nav> <div class="mobile-nav" id="mobile-nav"> <a href="#hero">Home</a> <a href="#about">About</a> <a href="#skills">Skills</a> <a href="#projects">Projects</a> <a href="#blog">Blog</a> <a href="#contact">Contact</a> </div>  <article class="blog-post"> <div class="blog-post-header"> <a href="/#blog" class="blog-post-back">← Back to posts</a> <div class="blog-post-date">2024-12-15</div> <h1 class="blog-post-title">Understanding Kubernetes Ingress Controllers</h1> <div class="blog-post-tags"> <span>Kubernetes</span><span>Networking</span><span>DevOps</span> </div> </div> <div class="blog-content"><h2>What is an Ingress Controller?</h2>
+<p>An Ingress Controller is a specialized load balancer for Kubernetes environments. It abstracts the complexity of routing external traffic to internal services, providing features like SSL termination, path-based routing, and virtual hosting.</p>
+
+<h2>Why Do You Need One?</h2>
+<p>Without an Ingress Controller, you'd need to expose each service individually using <code>NodePort</code> or <code>LoadBalancer</code> type services. This quickly becomes unmanageable as your application grows.</p>
+
+<pre><code>apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-app-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: myapp.example.com
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: api-service
+                port:
+                  number: 80</code></pre>
+
+<h2>Popular Ingress Controllers</h2>
+
+<h3>1. Nginx Ingress Controller</h3>
+<p>The most widely adopted choice. It's battle-tested, well-documented, and supports a rich set of annotations for fine-grained control.</p>
+
+<h3>2. Traefik</h3>
+<p>A modern, cloud-native reverse proxy that integrates beautifully with Kubernetes. It auto-discovers services and supports middleware chains.</p>
+
+<h3>3. HAProxy</h3>
+<p>A high-performance option for latency-sensitive workloads. HAProxy has been a reliable load balancer long before Kubernetes existed.</p>
+
+<h2>Best Practices</h2>
+<ul>
+<li><strong>Always use TLS</strong> — configure cert-manager for automated certificate management</li>
+<li><strong>Rate limiting</strong> — protect your services from abuse</li>
+<li><strong>Health checks</strong> — configure proper readiness and liveness probes</li>
+<li><strong>Monitoring</strong> — export metrics to Prometheus for observability</li>
+</ul>
+
+<h2>Conclusion</h2>
+<p>Choosing the right Ingress Controller depends on your specific requirements — traffic volume, feature needs, and team expertise. Start with Nginx if you're unsure, then evaluate alternatives as your needs evolve.</p></div> </article> <footer class="footer"> <span class="footer-left">Built by Harshan with Astro.js</span> <div class="footer-links"> <a href="#hero">Home</a> <a href="#about">About</a> <a href="#skills">Skills</a> <a href="#projects">Projects</a> <a href="#blog">Blog</a> <a href="#contact">Contact</a> </div> <span class="footer-right">devopsharshan.farmfresh.click</span> </footer> <div class="cursor-dot" id="cursor-dot"></div> <div class="cursor-ring" id="cursor-ring"></div>  </body></html>

@@ -1,0 +1,55 @@
+---
+// Blog.astro - Blog preview cards from content collection 
+
+const posts = [
+  {
+    slug: 'k8s-ingress-guide',
+    title: 'Understanding Kubernetes Ingress Controllers',
+    date: '2024-12-15',
+    excerpt: 'A deep dive into Kubernetes Ingress controllers, comparing Nginx, Traefik, and HAProxy. Learn how to route external traffic to your cluster services efficiently.',
+    tags: ['Kubernetes', 'Networking', 'DevOps'],
+  },
+  {
+    slug: 'terraform-basics',
+    title: 'Terraform Fundamentals: Infrastructure as Code',
+    date: '2024-11-28',
+    excerpt: 'Getting started with Terraform — from basic HCL syntax to managing remote state and building reusable modules for cloud infrastructure provisioning.',
+    tags: ['Terraform', 'IaC', 'AWS'],
+  },
+];
+---
+
+<section class="section" id="blog">
+  <p class="section-label">// today i learned</p>
+  <h2 class="section-heading">From the Terminal Log</h2>
+
+  <div class="blog-grid">
+    {posts.map((post) => (
+      <a href={`/blog/${post.slug}`} class="blog-card">
+        <span class="blog-date">{post.date}</span>
+        <h3 class="blog-title">{post.title}</h3>
+        <p class="blog-excerpt">{post.excerpt}</p>
+        <div class="blog-tags">
+          {post.tags.map(tag => <span class="blog-tag">{tag}</span>)}
+        </div>
+        <span class="blog-read-more">Read more →</span>
+      </a>
+    ))}
+  </div>
+</section>
+
+<script>
+  const blogCards = document.querySelectorAll('.blog-card');
+  const blogObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, i * 100);
+        blogObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  blogCards.forEach(card => blogObserver.observe(card));
+</script>

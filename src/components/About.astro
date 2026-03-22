@@ -1,0 +1,84 @@
+---
+// About.astro - Terminal card + bio + stats 
+---
+
+<section class="section" id="about">
+  <div class="about-grid">
+    <div class="about-left">
+      <div class="terminal-card">
+        <div class="terminal-header">
+          <span class="terminal-dot red"></span>
+          <span class="terminal-dot yellow"></span>
+          <span class="terminal-dot green"></span>
+          <span class="terminal-title">harshan@devops:~$</span>
+        </div>
+        <div class="terminal-body" id="terminal-body">
+          <div class="terminal-line"><span class="cmd">$ whoami</span></div>
+          <div class="terminal-line"><span class="output">> Harshan — DevOps Engineer</span></div>
+          <div class="terminal-line"><span class="cmd">$ location</span></div>
+          <div class="terminal-line"><span class="output">> India</span></div>
+          <div class="terminal-line"><span class="cmd">$ experience</span></div>
+          <div class="terminal-line"><span class="output">> 2+ years in DevOps & Cloud</span></div>
+          <div class="terminal-line"><span class="cmd">$ status</span></div>
+          <div class="terminal-line"><span class="output">> Open to opportunities ✓</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="about-right">
+      <p class="section-label">// about me</p>
+      <h2 class="about-heading">The Engineer Behind the Terminal</h2>
+      <p class="about-text">
+        I'm a DevOps engineer with a deep passion for automating infrastructure
+        and streamlining deployment workflows. My toolkit spans across cloud
+        platforms, container orchestration, and CI/CD pipelines.
+      </p>
+      <p class="about-text">
+        From provisioning infrastructure with Terraform to orchestrating
+        microservices on Kubernetes, I build systems that are resilient,
+        scalable, and fully automated.
+      </p>
+      <p class="about-text">
+        When I'm not writing YAML or debugging pipelines, you'll find me
+        exploring new DevOps tools, contributing to open source, or writing
+        about what I've learned.
+      </p>
+      <div class="about-stats">
+        <div class="stat-card reveal">
+          <div class="stat-number">20+</div>
+          <div class="stat-label">Projects</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-number">2+</div>
+          <div class="stat-label">Years</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-number">10+</div>
+          <div class="stat-label">Tools</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Terminal typing animation on scroll
+  const terminalBody = document.getElementById('terminal-body');
+  if (terminalBody) {
+    const lines = terminalBody.querySelectorAll('.terminal-line');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          lines.forEach((line, i) => {
+            setTimeout(() => {
+              line.classList.add('visible');
+            }, 150 * i);
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    observer.observe(terminalBody);
+  }
+</script>

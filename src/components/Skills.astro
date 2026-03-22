@@ -1,0 +1,102 @@
+---
+// Skills.astro - Infinite marquee slider 
+
+const row1 = [
+  { name: 'Docker', icon: 'docker/docker-original' },
+  { name: 'Kubernetes', icon: 'kubernetes/kubernetes-plain' },
+  { name: 'AWS', icon: 'amazonwebservices/amazonwebservices-plain-wordmark' },
+  { name: 'Terraform', icon: 'terraform/terraform-original' },
+  { name: 'Jenkins', icon: 'jenkins/jenkins-original' },
+  { name: 'Ansible', icon: 'ansible/ansible-original' },
+  { name: 'GitHub Actions', icon: 'github/github-original' },
+  { name: 'Prometheus', icon: 'prometheus/prometheus-original' },
+  { name: 'Grafana', icon: 'grafana/grafana-original' },
+  { name: 'Linux', icon: 'linux/linux-original' },
+];
+
+const row2 = [
+  { name: 'Python', icon: 'python/python-original' },
+  { name: 'Bash', icon: 'bash/bash-original' },
+  { name: 'Nginx', icon: 'nginx/nginx-original' },
+  { name: 'PostgreSQL', icon: 'postgresql/postgresql-original' },
+  { name: 'Redis', icon: 'redis/redis-original' },
+  { name: 'Git', icon: 'git/git-original' },
+  { name: 'Helm', icon: 'helm/helm-original' },
+  { name: 'Elasticsearch', icon: 'elasticsearch/elasticsearch-original' },
+  { name: 'Vagrant', icon: 'vagrant/vagrant-original' },
+  { name: 'Ubuntu', icon: 'ubuntu/ubuntu-original' },
+];
+
+const row3 = [
+  { name: 'ArgoCD', icon: 'argocd/argocd-original' },
+  { name: 'GitLab CI', icon: 'gitlab/gitlab-original' },
+  { name: 'Azure', icon: 'azure/azure-original' },
+  { name: 'GCP', icon: 'googlecloud/googlecloud-original' },
+  { name: 'SonarQube', icon: 'sonarqube/sonarqube-original' },
+  { name: 'Vault', icon: 'vault/vault-original' },
+  { name: 'Consul', icon: 'consul/consul-original' },
+  { name: 'Packer', icon: 'packer/packer-original' },
+  { name: 'Jira', icon: 'jira/jira-original' },
+  { name: 'Confluence', icon: 'confluence/confluence-original' },
+];
+
+const CDN = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons';
+---
+
+<section class="skills-section" id="skills">
+  <p class="section-label">// tools & technologies</p>
+  <h2 class="section-heading">My DevOps Arsenal</h2>
+
+  <div class="marquee-container">
+    <div class="marquee-fade left"></div>
+    <div class="marquee-fade right"></div>
+
+    <!-- Row 1 - Forward -->
+    <div class="marquee-row forward speed-1">
+      {row1.map(skill => (
+        <div class="skill-pill">
+          <img src={`${CDN}/${skill.icon}.svg`} alt={skill.name} loading="lazy" width="26" height="26" />
+          <span>{skill.name}</span>
+        </div>
+      ))}
+      {row1.map(skill => (
+        <div class="skill-pill">
+          <img src={`${CDN}/${skill.icon}.svg`} alt={skill.name} loading="lazy" width="26" height="26" />
+          <span>{skill.name}</span>
+        </div>
+      ))}
+    </div>
+
+    <!-- Row 2 - Reverse -->
+    <div class="marquee-row reverse speed-2">
+      {row2.map(skill => (
+        <div class="skill-pill">
+          <img src={`${CDN}/${skill.icon}.svg`} alt={skill.name} loading="lazy" width="26" height="26" />
+          <span>{skill.name}</span>
+        </div>
+      ))}
+      {row2.map(skill => (
+        <div class="skill-pill">
+          <img src={`${CDN}/${skill.icon}.svg`} alt={skill.name} loading="lazy" width="26" height="26" />
+          <span>{skill.name}</span>
+        </div>
+      ))}
+    </div>
+
+    <!-- Row 3 - Forward -->
+    <div class="marquee-row forward speed-3">
+      {row3.map(skill => (
+        <div class="skill-pill">
+          <img src={`${CDN}/${skill.icon}.svg`} alt={skill.name} loading="lazy" width="26" height="26" />
+          <span>{skill.name}</span>
+        </div>
+      ))}
+      {row3.map(skill => (
+        <div class="skill-pill">
+          <img src={`${CDN}/${skill.icon}.svg`} alt={skill.name} loading="lazy" width="26" height="26" />
+          <span>{skill.name}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
